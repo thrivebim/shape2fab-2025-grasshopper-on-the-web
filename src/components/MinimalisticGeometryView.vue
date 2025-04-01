@@ -14,6 +14,8 @@ import { Rhino3dmLoader } from "three/addons/loaders/3DMLoader.js";
 import { runCompute } from "@/scripts/compute.js";
 import { loadRhino } from "@/scripts/compute.js";
 
+import texturePath from "../assets/graphics/brick_texture.jpg"
+
 const loader = new Rhino3dmLoader();
 loader.setLibraryPath("https://cdn.jsdelivr.net/npm/rhino3dm@8.0.0-beta2/");
 
@@ -66,7 +68,7 @@ function init() {
 
   // scene
   scene = new THREE.Scene();
-  scene.background = new THREE.Color("rgb(222, 231, 243)");
+  scene.background = new THREE.Color("White");
 
   // orbit controls
   controls = new OrbitControls(camera, renderer.domElement);
