@@ -1,5 +1,7 @@
-<template>
+<template>  
+<div id="viewport">
   <div id="threejs-container"></div>
+</div>
 </template>
 
 <script setup>
@@ -15,11 +17,17 @@ loader.setLibraryPath('https://cdn.jsdelivr.net/npm/rhino3dm@8.0.0-beta2/')
 const props = defineProps(['data', 'path', 'runCompute'])
 const emits = defineEmits(['updateMetadata'])
 
-watch(() => props.runCompute, (newValue) => {
-  if (newValue) {
-    compute()
-  }
-})
+
+watch(
+  () => props.data,
+  (newValue) => {
+    console.log(props.data);
+    if (newValue) {
+      compute();
+    }
+  },
+  { deep: true }
+);
 
 let renderer, camera, scene, controls, container
 let solveCounter = 0
@@ -32,7 +40,7 @@ function init() {
   container.appendChild(renderer.domElement)
 
   camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
-  camera.position.set(0, 0, 40)
+  camera.position.set(0, 40, 15)
   camera.up.set(0, 0, 1)
 
   scene = new THREE.Scene()
@@ -40,10 +48,11 @@ function init() {
 
   controls = new OrbitControls(camera, renderer.domElement)
 
-  scene.add(new THREE.AmbientLight(0xffffff, 1))
+  scene.add(new THREE.AmbientLight(0xffffff, 1.2))
   const directionalLight = new THREE.DirectionalLight(0xffffff, 3)
-  directionalLight.position.set(0, 1, 0)
+  // directionalLight.position.set(0, 1, 0)
   scene.add(directionalLight)
+  THREE.Object3D.DEFAULT_UP.set(0, 0, 1);
 
   animate()
 }
@@ -69,8 +78,8 @@ async function compute() {
   loader.parse(buffer, function (object) {
     object.traverse((child) => {
       if (child.isMesh && child.userData?.attributes?.userStrings?.length) {
-        const mat = new THREE.MeshBasicMaterial({ color: 'red' })
-        child.material = mat
+        // const mat = new THREE.MeshBasicMaterial({ color: 'red' })
+        // child.material = mat
       }
     })
 
@@ -121,16 +130,18 @@ window.addEventListener('resize', () => {
 onMounted(async () => {
   init()
   await loadRhino()
+  compute()
+
 })
 
-onUpdated(() => {
-  compute()
-})
+// onUpdated(() => {
+//   compute()
+// })
 </script>
 
-<style scoped>
+<style>
 #threejs-container {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   height: 100vh;
@@ -138,4 +149,12 @@ onUpdated(() => {
   z-index: 0;
   overflow: hidden;
 }
+
+#viewport {
+  position: fixed;
+}
+
+
+
+
 </style>

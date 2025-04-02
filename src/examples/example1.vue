@@ -1,66 +1,90 @@
-<!-- // Script is in some way equivalent to script.js. This is place
-to define variables, methods and imports of other Vue compoennts. -->
-<script setup>
-// Understanding ref article: https://blog.logrocket.com/understanding-vue-refs/#:~:text=Ref%20s%20are%20Vue.,element%20in%20your%20Vue%20instance.
-// When ref attribute is added to element, this element then can be referenced
-// in template. It is sort of templatecement of getElementById (but better)
-import { ref, onBeforeMount, computed } from "vue";
-import { loadRhino } from "@/scripts/compute.js";
 
-// Import other Vue components in order to add them to a template.
+<script setup>
+
+import { ref, computed } from "vue";
+
 import GeometryView from "../components/BurgerGeometryView.vue"
 
 import Toggle from "../components/Toggle.vue"
 import Slider from "../components/Slider.vue"
 
-import def from '../assets/burger_compute.gh' //import Grasshopper definition for assets
+import def from '../assets/burger_compute.gh' 
 
-let firstSliderName = ref("Radius") //must match the Input name in your GH definition!
-let firstSliderValue = ref(10) //default slider value
-
-let secondSliderName = ref("Count") //must match the Input name in your GH definition!
-let secondSliderValue = ref(10) //default slider value
-
-let thirdSliderName = ref("Length") //must match the Input name in your GH definition!
-let thirdSliderValue = ref(10) //default slider sthird
+let LevelsSliderName = ref("Levels") 
+let LevelsSliderValue = ref(1) 
 
 
-///.............................................
+let MustardToggleName = ref("Mustard") 
+let MustardToggleValue = ref(true) 
+
+let OnionToggleName = ref("Onion") 
+let OnionToggleValue = ref(true) 
+
+let KetchupToggleName = ref("Ketchup") 
+let KetchupToggleValue = ref(true) 
+
+let TomatoToggleName = ref("Tomato") 
+let TomatoToggleValue = ref(true) 
+
+let CheeseToggleName = ref("Cheese") 
+let CheeseToggleValue = ref(true) 
+
+let LettuceToggleName = ref("Lettuce") 
+let LettuceToggleValue = ref(true) 
+
+
 let path = def //path to the Grasshopper definition
 let data = ref({})
-let metadata = ref([])
-
 
 function updateValue(newValue, parameterName) {
-  console.log(parameterName)
+  console.log(parameterName,newValue)
 
-  if (parameterName === firstSliderName.value) {
-    firstSliderValue.value = newValue
+  if (parameterName === LevelsSliderName.value) {
+    LevelsSliderValue.value = newValue
   } 
   
-  else if (parameterName === secondSliderName.value) {
-    secondSliderValue.value = newValue
+  if (parameterName === MustardToggleName.value) {
+    MustardToggleValue.value = newValue
   }
-  
-  else if (parameterName === thirdSliderName.value) {
-    thirdSliderValue.value = newValue
+
+  if (parameterName === OnionToggleName.value) {
+    OnionToggleValue.value = newValue
   }
+
+  if (parameterName === KetchupToggleName.value) {
+    KetchupToggleValue.value = newValue
+  }
+
+  if (parameterName === TomatoToggleName.value) {
+    TomatoToggleValue.value = newValue
+  }
+
+  if (parameterName === CheeseToggleName.value) {
+    CheeseToggleValue.value = newValue
+  }
+
+  if (parameterName === LettuceToggleName.value) {
+    LettuceToggleValue.value = newValue
+  }
+
 }
 
 
 // a computed ref. Vue will keep track of this and update it
 const computeData = computed(() => {
   data = {
-    [firstSliderName.value]: Number(firstSliderValue.value),
-    [secondSliderName.value]: Number(secondSliderValue.value),
-    [thirdSliderName.value]: Number(thirdSliderValue.value),
+    [LevelsSliderName.value]: Number(LevelsSliderValue.value),
+    [MustardToggleName.value]: MustardToggleValue.value,
+    [OnionToggleName.value]: OnionToggleValue.value,
+    [KetchupToggleName.value]: KetchupToggleValue.value,
+    [TomatoToggleName.value]: TomatoToggleValue.value,
+    [CheeseToggleName.value]: CheeseToggleValue.value,
+    [LettuceToggleName.value]: LettuceToggleValue.value,
   };
 
   return data
 })
 
-onBeforeMount( () => {
-})
 
 </script>
 
@@ -69,73 +93,86 @@ with data, objects, functions etc. -->
 <template>
 
 
-
-
-  <div id="app">
+<div>
     <GeometryView
       v-bind:data="computeData"
       v-bind:path="path"
       v-on:updateMetadata="receiveMetedata"
       />
       
-    <div class="sidebar">
-      <h2> burger controls</h2>
+    <div class="sidebar" >
+
+      <h2> Levels</h2>
       <Slider
-      title="Levels"
+      :title=LevelsSliderName
       min="0"
-      max="10"
+      max="5"
       step="1"
-      val="0"
+      val="1"
+      @update="updateValue"
     ></Slider>
     
-    <Slider
-      title="Width"
-      min="1"
-      max="10"
-      step="0.1"
-      val="0"
-    ></Slider>
+
 
     <br>
-    <h2> toppings</h2>
+    <h2> Toppings</h2>
 
-    
+
     <Toggle
-    title="Mustard">
-    </Toggle>
-    <br>
-    <Toggle
-    title="Ketchup">
-    </Toggle>
-    <br>
-    <Toggle
-    title="Pickles">
-    </Toggle>
-    <br>
-    <Toggle
-    title="Onions">
-    </Toggle>
-    <br>
+    :title="TomatoToggleName"
+    :val="TomatoToggleValue"
+    @update= "updateValue"
+    ></Toggle>
 
  
+    <Toggle
+    :title="OnionToggleName"
+    :val="OnionToggleValue"
+    @update= "updateValue"
+    ></Toggle>
 
+    <Toggle
+    :title="MustardToggleName"
+    :val="MustardToggleValue"
+    @update= "updateValue"
+    ></Toggle>
+
+
+    <Toggle
+    :title="KetchupToggleName"
+    :val="KetchupToggleValue"
+    @update= "updateValue"
+    ></Toggle>
+
+    <Toggle
+    :title="CheeseToggleName"
+    :val="CheeseToggleValue"
+    @update= "updateValue"
+    ></Toggle>
+
+
+    <Toggle
+    :title="LettuceToggleName"
+    :val="LettuceToggleValue"
+    @update= "updateValue"
+    ></Toggle>
+
+
+    <Toggle
+    :title="MustardToggleName"
+    :val="MustardToggleValue"
+    @update= "updateValue"
+    ></Toggle>
+
+
+  </div>
   
     </div>
-  </div>
 
 
 </template>
 
-<!-- Style is for CSS styling -->
-
 <style scoped>
-app {
-  height: 100vh;
-  width: 100vw;
-  overflow: hidden;
-  position: relative;
-  font-family: sans-serif;
-}
 
 .sidebar {
   position: fixed;
@@ -143,12 +180,16 @@ app {
   left: 20px;
   width: 300px;
   height: calc(100% - 120px);
-  background-color: rgba(255, 255, 255, 0.50);
+  background-color: rgba(255, 255, 255, 0.80);
   border-radius: 12px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   padding: 1rem;
   z-index: 10;
   backdrop-filter: blur(10px); /* optional: frosted glass effect */
+}
+
+html[data-theme='dark'] .sidebar {
+  background-color: rgba(0, 0, 0, 0.7) !important;
 }
 
 </style>
