@@ -30,6 +30,16 @@ watch(
 );
 
 let renderer, camera, scene, controls, container
+let lettuceTexture, onionTexture, ketchupTexture, mustardTexture, tomatoTexture, cheeseTexture
+
+let lettuceTexturePath = '/textures/lettuce.png'
+let onionTexturePath = '/textures/onion.png'
+let meatTexturePath = '/textures/meat.png'
+let breadTexturePath = '/textures/bread.png'
+let tomatoTexturePath = '/textures/tomato.png'
+let cheeseTexturePath = '/textures/cheese.png'
+
+
 let solveCounter = 0
 
 function init() {
@@ -53,6 +63,85 @@ function init() {
   // directionalLight.position.set(0, 1, 0)
   scene.add(directionalLight)
   THREE.Object3D.DEFAULT_UP.set(0, 0, 1);
+
+  lettuceTexture = new THREE.TextureLoader().load(
+    lettuceTexturePath,
+    (texture) => {
+      texture.wrapS = THREE.RepeatWrapping
+      texture.wrapT = THREE.RepeatWrapping
+      texture.repeat.set(1, 1)
+    },
+    undefined,
+    (error) => {
+      console.error('Error loading texture:', error)
+    } 
+  );
+
+  onionTexture = new THREE.TextureLoader().load(
+    onionTexturePath,
+    (texture) => {
+      texture.wrapS = THREE.RepeatWrapping
+      texture.wrapT = THREE.RepeatWrapping
+      texture.repeat.set(1, 1)
+    },
+    undefined,
+    (error) => {
+      console.error('Error loading texture:', error)
+    } 
+  );
+
+
+  tomatoTexture = new THREE.TextureLoader().load(
+    tomatoTexturePath,
+    (texture) => {
+      texture.wrapS = THREE.RepeatWrapping
+      texture.wrapT = THREE.RepeatWrapping
+      texture.repeat.set(1, 1)
+    },
+    undefined,
+    (error) => {
+      console.error('Error loading texture:', error)
+    } 
+  );
+
+  cheeseTexture = new THREE.TextureLoader().load(
+    cheeseTexturePath,
+    (texture) => {
+      texture.wrapS = THREE.RepeatWrapping
+      texture.wrapT = THREE.RepeatWrapping
+      texture.repeat.set(1, 1)
+    },
+    undefined,
+    (error) => {
+      console.error('Error loading texture:', error)
+    } 
+  );
+  meatTexturePath = new THREE.TextureLoader().load(
+    meatTexturePath,
+    (texture) => {
+      texture.wrapS = THREE.RepeatWrapping
+      texture.wrapT = THREE.RepeatWrapping
+      texture.repeat.set(1, 1)
+    },
+    undefined,
+    (error) => {
+      console.error('Error loading texture:', error)
+    } 
+  );
+  breadTexturePath = new THREE.TextureLoader().load(
+    breadTexturePath,
+    (texture) => {
+      texture.wrapS = THREE.RepeatWrapping
+      texture.wrapT = THREE.RepeatWrapping
+      texture.repeat.set(1, 1)
+    },
+    undefined,
+    (error) => {
+      console.error('Error loading texture:', error)
+    } 
+  );
+
+
 
   animate()
 }
@@ -78,8 +167,55 @@ async function compute() {
   loader.parse(buffer, function (object) {
     object.traverse((child) => {
       if (child.isMesh && child.userData?.attributes?.userStrings?.length) {
-        // const mat = new THREE.MeshBasicMaterial({ color: 'red' })
-        // child.material = mat
+        const part = child.userData.attributes.userStrings[0][1]
+        child.castShadow = true;
+        child.receiveShadow = true;
+  
+        if (part === "lettuce"){
+          const mat = new THREE.MeshStandardMaterial({ 
+            map: lettuceTexture, 
+            transparent: true,
+            side: THREE.DoubleSide })
+          child.material = mat
+        }
+
+        if (part === "onion"){
+          const mat = new THREE.MeshStandardMaterial({ 
+            map: onionTexture, 
+            transparent: true,
+            side: THREE.DoubleSide })
+          child.material = mat
+        }
+        if (part === "cheese"){
+          const mat = new THREE.MeshStandardMaterial({ 
+            map: cheeseTexture, 
+            transparent: true,
+            side: THREE.DoubleSide })
+          child.material = mat
+        }
+        if (part === "tomato"){
+          const mat = new THREE.MeshStandardMaterial({ 
+            map: tomatoTexture, 
+            transparent: true,
+            side: THREE.DoubleSide })
+          child.material = mat
+        }
+        if (part === "meat"){
+          const mat = new THREE.MeshStandardMaterial({ 
+            map: meatTexturePath, 
+            transparent: true,
+            side: THREE.DoubleSide })
+          child.material = mat
+        }
+        if (part === "bread"){
+          const mat = new THREE.MeshStandardMaterial({ 
+            map: breadTexturePath, 
+            transparent: true,
+            side: THREE.DoubleSide })
+          child.material = mat
+        }
+
+
       }
     })
 
@@ -137,6 +273,8 @@ onMounted(async () => {
 // onUpdated(() => {
 //   compute()
 // })
+
+
 </script>
 
 <style>
