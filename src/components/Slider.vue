@@ -4,9 +4,7 @@ import { ref, onMounted, watch } from "vue";
 const props = defineProps(["title", "min", "max", "step", "val"]);
 const emits = defineEmits(["update"]);
 
-const title = ref(props.title);
-const sliderValue = ref(props.val);
-const rangeInput = ref(null); // Reference to the input element
+var sliderValue = ref(props.val);
 
 function emitValueUpdate() {
   emits("update", sliderValue.value, title.value);
@@ -19,9 +17,13 @@ const updateSlider = () => {
   rangeInput.value.style.setProperty("--value", `${val}%`);
 };
 
-// Update the slider style when value changes
-watch(sliderValue, updateSlider);
-onMounted(updateSlider);
+onMounted(() => {
+  const rangeInput = document.querySelector(".modern-range");
+  const val =
+    ((rangeInput.value - rangeInput.min) / (rangeInput.max - rangeInput.min)) *
+    100;
+  rangeInput.style.setProperty("--value", `${val}%`);
+});
 </script>
 
 <template>
