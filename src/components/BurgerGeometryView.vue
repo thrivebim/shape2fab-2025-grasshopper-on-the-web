@@ -18,6 +18,15 @@ const props = defineProps(['data', 'path', 'runCompute'])
 const emits = defineEmits(['updateMetadata'])
 
 
+import lettuceTexturePath from '../assets/textures/lettuce.png'
+import onionTexturePath from '../assets/textures/onion.png'
+import meatTexturePath from '../assets/textures/meat.png'
+import breadTexturePath from '../assets/textures/bread.png'
+import tomatoTexturePath from '../assets/textures/tomato.png'
+import cheeseTexturePath from '../assets/textures/cheese.png'
+
+
+
 watch(
   () => props.data,
   (newValue) => {
@@ -32,12 +41,6 @@ watch(
 let renderer, camera, scene, controls, container
 let lettuceTexture, onionTexture, ketchupTexture, mustardTexture, tomatoTexture, cheeseTexture
 
-let lettuceTexturePath = '/textures/lettuce.png'
-let onionTexturePath = '/textures/onion.png'
-let meatTexturePath = '/textures/meat.png'
-let breadTexturePath = '/textures/bread.png'
-let tomatoTexturePath = '/textures/tomato.png'
-let cheeseTexturePath = '/textures/cheese.png'
 
 
 let solveCounter = 0

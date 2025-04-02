@@ -13,7 +13,6 @@ import def from '../assets/burger_compute.gh'
 let LevelsSliderName = ref("Levels") 
 let LevelsSliderValue = ref(1) 
 
-
 let MustardToggleName = ref("Mustard") 
 let MustardToggleValue = ref(true) 
 
