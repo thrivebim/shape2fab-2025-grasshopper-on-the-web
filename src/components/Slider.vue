@@ -1,36 +1,27 @@
 <script setup>
-import { ref, onMounted } from "vue";
-// Define properties that you will be able to access from parent component.
-// Those properties will be binded from parent to child.
-// Available JavaScript types: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures
+import { ref, onMounted, watch } from "vue";
+
 const props = defineProps(["title", "min", "max", "step", "val"]);
-
-const title = ref(props.title);
-
-// Define events that will be accessible from parent component
 const emits = defineEmits(["update"]);
 
-var sliderValue = ref(props.val);
+const title = ref(props.title);
+const sliderValue = ref(props.val);
+const rangeInput = ref(null); // Reference to the input element
 
 function emitValueUpdate() {
   emits("update", sliderValue.value, title.value);
 }
 
-const updateSlider = (event) => {
+const updateSlider = () => {
+  if (!rangeInput.value) return;
   const val =
-    ((event.target.value - event.target.min) /
-      (event.target.max - event.target.min)) *
-    100;
-  event.target.style.setProperty("--value", `${val}%`);
+    ((sliderValue.value - props.min) / (props.max - props.min)) * 100;
+  rangeInput.value.style.setProperty("--value", `${val}%`);
 };
 
-onMounted(() => {
-  const rangeInput = document.querySelector(".modern-range");
-  const val =
-    ((rangeInput.value - rangeInput.min) / (rangeInput.max - rangeInput.min)) *
-    100;
-  rangeInput.style.setProperty("--value", `${val}%`);
-});
+// Update the slider style when value changes
+watch(sliderValue, updateSlider);
+onMounted(updateSlider);
 </script>
 
 <template>
@@ -38,6 +29,7 @@ onMounted(() => {
     <form class="definition-input">
       <label class="input-title">{{ title }}: {{ sliderValue }}</label>
       <input
+        ref="rangeInput"
         type="range"
         class="modern-range"
         :min="min"
