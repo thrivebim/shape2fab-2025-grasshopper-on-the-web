@@ -39,7 +39,7 @@ watch(
 );
 
 let renderer, camera, scene, controls, container
-let lettuceTexture, onionTexture, ketchupTexture, mustardTexture, tomatoTexture, cheeseTexture
+let lettuceTexture, onionTexture, ketchupTexture, mustardTexture, tomatoTexture, cheeseTexture, breadTexture, meatTexture
 
 
 
@@ -119,7 +119,7 @@ function init() {
       console.error('Error loading texture:', error)
     } 
   );
-  meatTexturePath = new THREE.TextureLoader().load(
+  meatTexture = new THREE.TextureLoader().load(
     meatTexturePath,
     (texture) => {
       texture.wrapS = THREE.RepeatWrapping
@@ -131,7 +131,7 @@ function init() {
       console.error('Error loading texture:', error)
     } 
   );
-  breadTexturePath = new THREE.TextureLoader().load(
+  breadTexture = new THREE.TextureLoader().load(
     breadTexturePath,
     (texture) => {
       texture.wrapS = THREE.RepeatWrapping
@@ -170,7 +170,7 @@ async function compute() {
   loader.parse(buffer, function (object) {
     object.traverse((child) => {
       if (child.isMesh && child.userData?.attributes?.userStrings?.length) {
-        const part = child.userData.attributes.userStrings[0][1]
+        let part = child.userData.attributes.userStrings[0][1]
         child.castShadow = true;
         child.receiveShadow = true;
   
@@ -205,14 +205,14 @@ async function compute() {
         }
         if (part === "meat"){
           const mat = new THREE.MeshStandardMaterial({ 
-            map: meatTexturePath, 
+            map: meatTexture, 
             transparent: true,
             side: THREE.DoubleSide })
           child.material = mat
         }
         if (part === "bread"){
           const mat = new THREE.MeshStandardMaterial({ 
-            map: breadTexturePath, 
+            map: breadTexture, 
             transparent: true,
             side: THREE.DoubleSide })
           child.material = mat
