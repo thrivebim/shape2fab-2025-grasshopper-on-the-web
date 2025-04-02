@@ -25,7 +25,7 @@ Learn to build a custom web interface for real-time control and display of Grass
 
 ### Start Rhino.Compute
 
-Start your local Rhino.Compute server either by running your Grasshopper (with Hops installed) or by directly starting Rhino.Compute from `%AppData%\McNeel\Rhinoceros\packages\7.0\Hops\0.16.2\compute.geometry\compute.geometry`. 
+Start your local Rhino.Compute server either by running your Grasshopper (with Hops installed).
 
 You know that Rhino.Compute is running if you can see in your console `Listening on..`
 
