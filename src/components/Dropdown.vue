@@ -46,17 +46,15 @@ function emitValueUpdate() {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  background: var(--global-neumorphic-light) url('path_to_your_arrow_icon') no-repeat right 10px center; /* Adjust path_to_your_arrow_icon */
+  background: var(--global-light) url('path_to_your_arrow_icon') no-repeat right 10px center; /* Adjust path_to_your_arrow_icon */
   border-radius: 340.074px;
   padding: 10px 35px 10px 15px; /* Adjust padding to make room for the arrow */
   border: none;
   width: 100%;
   height: 40px;
-  color: var(--neumorphic-blue);
+  color: var(--custom-color);
   font-size: medium;
   cursor: pointer;
-  box-shadow: -1.417px -1.417px 8.492px 0px color(display-p3 0.9843 0.9882 0.9961),
-              1.417px 1.417px 2.834px 0px color(display-p3 0.3451 0.4 0.5176 / 0.50);
 }
 
 .dropdown:hover, .dropdown:focus {
@@ -69,7 +67,7 @@ function emitValueUpdate() {
 
 /* Style adjustments for options */
 .dropdown option {
-  color: var(--neumorphic-blue);
+  color: var(--custom-color);
   background: var(--global-neumorphic-background);
   border:none;
   box-shadow:none;
