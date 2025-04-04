@@ -68,7 +68,6 @@ function emitValueUpdate() {
 /* Style adjustments for options */
 .dropdown option {
   color: var(--custom-color);
-  background: var(--global-neumorphic-background);
   border:none;
   box-shadow:none;
 }

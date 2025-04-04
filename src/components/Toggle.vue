@@ -77,7 +77,7 @@ function emitValueUpdate()
   position: absolute;
   cursor: pointer;
   top: 0; left: 0; right: 0; bottom: 0;
-  background-color: #ccc; /* Or use a CSS variable like var(--neutral-bg) */
+  background-color: var(  --vt-c-slate-200);
   transition: 0.4s;
   border-radius: 25px;
 }
