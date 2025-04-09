@@ -132,8 +132,8 @@ function changeMode(value, title) {
 
 .selected-tab {
   font-weight: bold;
-  color: var(--neumorphic-blue);
-  border-bottom: 2px solid var(--neumorphic-blue);
+  color: var(--custom-color);
+  border-bottom: 2px solid var(--custom-color);
   margin-right: 20px;
 }
 </style>

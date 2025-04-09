@@ -9,7 +9,7 @@
 
 .spinner {
   border: 6px solid rgba(255, 255, 255, 0.5); 
-  border-top-color: var(--neumorphic-blue); 
+  border-top-color: var(--custom-color); 
   border-radius: 50%;
   width: 70px;
   height: 70px;

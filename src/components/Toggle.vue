@@ -77,11 +77,9 @@ function emitValueUpdate()
   position: absolute;
   cursor: pointer;
   top: 0; left: 0; right: 0; bottom: 0;
-  background-color: #ccc; /* Or use a CSS variable like var(--neutral-bg) */
+  background-color: var(  --vt-c-slate-200);
   transition: 0.4s;
   border-radius: 25px;
-  box-shadow: -1.4px -1.4px 8.5px color(display-p3 0.9843 0.9882 0.9961),
-              1.4px 1.4px 2.8px color(display-p3 0.3451 0.4 0.5176 / 0.50);
 }
 
 /* Knob */
@@ -92,11 +90,9 @@ function emitValueUpdate()
   width: 21px;
   left: 2px;
   bottom: 2px;
-  background-color: var(--neumorphic-blue);
+  background-color: var(--custom-color);
   transition: 0.4s;
   border-radius: 50%;
-  box-shadow: -1.4px -1.4px 8.5px color(display-p3 0.9843 0.9882 0.9961),
-              1.4px 1.4px 2.8px color(display-p3 0.3451 0.4 0.5176 / 0.50);
 }
 
 /* Move knob when checked */
@@ -107,11 +103,11 @@ function emitValueUpdate()
 
 /* ON state (when checkbox is checked) */
 .switch input:checked + .slider {
-  background-color: var(--global-neumorphic-light); /* Keep or adjust */
+  background-color: var(--global-light); /* Keep or adjust */
 }
 
 .switch input:checked + .slider::before {
-  background-color: var(--neumorphic-blue); /* Already looks good */
+  background-color: var(--custom-color); /* Already looks good */
 }
 
 /* OFF knob color (optional if you want dimmer knob too) */
