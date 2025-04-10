@@ -6,8 +6,7 @@
 </template>
 
 <script setup>
-// Imports;
-import { onMounted, onUpdated, watch } from "vue";
+import { onMounted, watch } from "vue";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { Rhino3dmLoader } from "three/addons/loaders/3DMLoader.js";
@@ -35,26 +34,17 @@ watch(
 
 // Three js objects
 let renderer, camera, scene, controls, container;
-let mirrorMaterial, blackMaterial, texture;
-
-const widthRatio = 0.7;
-const heightRatio = 0.85;
-let width = window.innerWidth * widthRatio;
-let heigh = window.innerHeight * heightRatio;
-const frustumSize = 40;
-const aspectRatio = width / heigh;
+let texture;
 
 function init() {
-  window.addEventListener("resize", onWindowResize, false);
-  // rendeder
+  container = document.getElementById('threejs-container')
   renderer = new THREE.WebGLRenderer({ antialias: true });
-  renderer.setSize(width, heigh);
-  renderer.setPixelRatio(window.devicePixelRatio);
+  renderer.setSize(window.innerWidth, window.innerHeight)
+  renderer.setPixelRatio(window.devicePixelRatio)
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-  document.getElementById("threejs-container").appendChild(renderer.domElement);
+  container.appendChild(renderer.domElement)
 
-  // camera
   // Set up camera - https://threejs.org/docs/#api/en/cameras/PerspectiveCamera
   camera = new THREE.PerspectiveCamera(
     60,
@@ -111,7 +101,7 @@ function init() {
 
   // add shadow plane
   const plane = new THREE.Mesh(
-    new THREE.PlaneGeometry(1000, 50),
+    new THREE.PlaneGeometry(1000, 0),
     new THREE.ShadowMaterial({
       color: "rgb(194, 191, 194)",
       transparent: true,
@@ -182,55 +172,6 @@ function animate() {
   requestAnimationFrame(animate);
   controls.update();
   renderer.render(scene, camera);
-}
-
-// This will be run whenever the window is resized
-window.addEventListener("resize", onWindowResize);
-function onWindowResize() {
-  camera.aspect =
-    (window.innerWidth * widthRatio) / (window.innerHeight * heightRatio);
-  camera.updateProjectionMatrix();
-
-  renderer.setSize(
-    window.innerWidth * widthRatio,
-    window.innerHeight * heightRatio
-  );
-}
-
-/**
- * Helper function that behaves like rhino's "zoom to selection", but for three.js!
- */
-function zoomCameraToSelection(camera, controls, selection, fitOffset = 1.1) {
-  const box = new THREE.Box3();
-
-  for (const object of selection) {
-    if (object.isLight) continue;
-    box.expandByObject(object);
-  }
-
-  const size = box.getSize(new THREE.Vector3());
-  const center = box.getCenter(new THREE.Vector3());
-
-  const maxSize = Math.max(size.x, size.y, size.z);
-  const fitHeightDistance =
-    maxSize / (2 * Math.atan((Math.PI * camera.fov) / 360));
-  const fitWidthDistance = fitHeightDistance / camera.aspect;
-  const distance = fitOffset * Math.max(fitHeightDistance, fitWidthDistance);
-
-  const direction = controls.target
-    .clone()
-    .sub(camera.position)
-    .normalize()
-    .multiplyScalar(distance);
-  controls.maxDistance = distance * 10;
-  controls.target.copy(center);
-
-  camera.near = distance / 100;
-  camera.far = distance * 100;
-  camera.updateProjectionMatrix();
-  camera.position.copy(controls.target).sub(direction);
-
-  controls.update();
 }
 
 // This will be run whenever this component is instantiated

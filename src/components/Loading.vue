@@ -14,10 +14,6 @@
   width: 70px;
   height: 70px;
   animation: spin 1s linear infinite;
-  box-shadow: inset -2px -2px 5px rgba(255, 255, 255, 0.7), 
-              inset 2px 2px 5px rgba(0, 0, 0, 0.2),
-              -3px -3px 7px rgba(255, 255, 255, 0.7), 
-              3px 3px 7px rgba(0, 0, 0, 0.2); 
 }
 
 @keyframes spin {

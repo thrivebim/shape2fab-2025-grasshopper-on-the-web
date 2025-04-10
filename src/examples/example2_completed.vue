@@ -1,35 +1,5 @@
-<template>
-
-  <div id="sidebar">
-    <Slider :title="heightSliderName" 
-    :min="1" max="20" :step="1" :val="heightSliderValue" 
-    @update="updateValue"></Slider>
-
-    <Slider 
-    :title="widthSliderName" 
-    :min="1" max="30" :step="1" :val="widthSliderValue" @update="updateValue"></Slider>
-    
-    <Slider :title="verticalRotationSliderName" 
-    :min="0" max="30" :step="1" :val="verticalRotationValue" @update="updateValue"></Slider>
-
-    <Slider :title="horizontalRotationSliderName" 
-    :min="0" max="15" :step="1" :val="horizontalRotationValue" @update="updateValue"></Slider>
-
-    <Dropdown :title="shapeDropDownName"
-    :options="dropdownOptions" :val="shapeIndex" @update="updateValue"></Dropdown>
-
-    <MetadataTextBox :metadata="metadata"></MetadataTextBox>
-  
-  </div>
-
-  <div id="viewer">
-    <GeometryView :data="inputs" :path="path" @updateMetadata="receiveMetadata"></GeometryView>
-  </div>
-
-</template>
-
 <script setup>
-import { ref, onBeforeMount, computed } from "vue"
+import { ref } from "vue"
 import GeometryView from "../components/MinimalisticGeometryView.vue"
 import Slider from '../components/Slider.vue'
 import Dropdown from "../components/Dropdown.vue"
@@ -62,9 +32,7 @@ const dropdownOptions = ref([
 
 let metadata = ref([])
 
-
-
-//define inputs
+//Put all inputs together to send them to Rhino.Compute
 let inputs = ref({
   [heightSliderName.value]: heightSliderValue.value ,
   [widthSliderName.value] : widthSliderValue.value ,
@@ -77,8 +45,7 @@ function updateValue(newValue, parameterName) {
   // Iterate over the inputs array
   for (const [key, value] of Object.entries(inputs.value)) {
     if (key == parameterName){
-        inputs.value[key] = newValue
-        console.log(parameterName + ':' + newValue)
+      inputs.value[key] = newValue
     }
   }
 }
@@ -89,6 +56,38 @@ function receiveMetadata(newValue) {
 }
 
 </script>
+
+<template>
+
+  <div id="sidebar">
+    <Slider :title="heightSliderName" 
+    :min="1" max="20" :step="1" :val="heightSliderValue" 
+    @update="updateValue"></Slider>
+
+    <Slider 
+    :title="widthSliderName" 
+    :min="1" max="30" :step="1" :val="widthSliderValue" @update="updateValue"></Slider>
+    
+    <Slider :title="verticalRotationSliderName" 
+    :min="0" max="30" :step="1" :val="verticalRotationValue" @update="updateValue"></Slider>
+
+    <Slider :title="horizontalRotationSliderName" 
+    :min="0" max="15" :step="1" :val="horizontalRotationValue" @update="updateValue"></Slider>
+
+    <Dropdown :title="shapeDropDownName"
+    :options="dropdownOptions" :val="shapeIndex" @update="updateValue"></Dropdown>
+
+    <MetadataTextBox :metadata="metadata"></MetadataTextBox>
+  
+  </div>
+
+  <div id="viewer">
+    <GeometryView :data="inputs" :path="path" @updateMetadata="receiveMetadata"></GeometryView>
+  </div>
+
+</template>
+
+
 
 <style scoped>
 

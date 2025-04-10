@@ -48,6 +48,7 @@ function emitValueUpdate() {
   -moz-appearance: none;
   background: var(--global-light) url('path_to_your_arrow_icon') no-repeat right 10px center; /* Adjust path_to_your_arrow_icon */
   border-radius: 340.074px;
+  border: 2px solid  var(--global-light);
   padding: 10px 35px 10px 15px; /* Adjust padding to make room for the arrow */
   border: none;
   width: 100%;
@@ -59,10 +60,7 @@ function emitValueUpdate() {
 
 .dropdown:hover, .dropdown:focus {
   color: black;
-  box-shadow: -1.751px -1.751px 3.503px 0px color(display-p3 1 1 1 / 0.50) inset, 
-              1.751px 1.751px 3.503px 0px color(display-p3 0.3451 0.4 0.5176 / 0.50) inset;
-  border:none;
-  outline: none;
+  border: 2px solid var(--custom-color);
 }
 
 /* Style adjustments for options */

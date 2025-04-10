@@ -4,7 +4,6 @@
 import { ref, computed } from "vue";
 
 import GeometryView from "../components/BurgerGeometryView.vue"
-
 import Toggle from "../components/Toggle.vue"
 import Slider from "../components/Slider.vue"
 
