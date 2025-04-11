@@ -37,6 +37,7 @@ let renderer, camera, scene, controls, container;
 let texture;
 
 function init() {
+
   container = document.getElementById('threejs-container')
   renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setSize(window.innerWidth, window.innerHeight)
@@ -101,7 +102,7 @@ function init() {
 
   // add shadow plane
   const plane = new THREE.Mesh(
-    new THREE.PlaneGeometry(1000, 0),
+    new THREE.PlaneGeometry(1000, 50),
     new THREE.ShadowMaterial({
       color: "rgb(194, 191, 194)",
       transparent: true,
@@ -183,17 +184,17 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-#viewport {
-  height: 100%;
-  width: 100%;
-  min-width: 200px;
-  position: inherit;
-}
+  #viewport {
+    position: fixed;
+  }
 
 #threejs-container {
-  height: 100%;
-  width: 100%;
-  min-width: 200px;
-  position: inherit;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: 0;
+    overflow: hidden;
 }
 </style>
