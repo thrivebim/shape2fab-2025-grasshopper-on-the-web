@@ -52,7 +52,7 @@ function init() {
     1,
     1000
   );
-  camera.position.set(50, 50, 20);
+  camera.position.set(30, 40, 20);
   camera.lookAt(0, 0, 0);
   camera.up.set(0, 0, 1);
 
@@ -98,6 +98,10 @@ function init() {
   const directLightSphere = new THREE.Mesh(directLightgeometry, material);
   directLightSphere.position.set(dirLightX, dirLightY, dirLightZ);
   scene.add(directLightSphere);
+
+  // add light helper
+  const lightHelper = new THREE.DirectionalLightHelper(dirLight, 5, 0x00ff00);
+  scene.add(lightHelper);
 
   // add shadow plane
   const plane = new THREE.Mesh(
