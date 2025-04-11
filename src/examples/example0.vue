@@ -5,13 +5,6 @@
     <br />
     <p>Web development is made up of three major parts:</p>
 
-    <Slider
-      title="Width of something"
-      min="0"
-      max="100"
-      step="1"
-      val="0"
-    ></Slider>
     <ul>
       <li>
         HTML: Outlines the content of a web page and defines its structure and
@@ -25,6 +18,19 @@
 
     <br />
 
+    <div class="myButton" @click="changeTitleColor()">Click Me!</div>
+    <br />
+
+    <!-- <Slider
+      title="Width of something"
+      min="0"
+      max="100"
+      step="1"
+      val="0"
+    ></Slider> -->
+
+    <br />
+
     <h2>
       To learn more about basic web development feel free to check out the
       following link:
@@ -32,8 +38,8 @@
     <a href="https://www.w3schools.com/html/html_intro.asp">W3 Link</a>
 
     <br />
+    <br />
 
-    <div class="myButton" @click="changeTitleColor()">Click Me!</div>
   </div>
 </template>
 
