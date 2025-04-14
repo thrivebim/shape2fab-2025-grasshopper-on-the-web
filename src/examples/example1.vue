@@ -1,7 +1,6 @@
-
 <script setup>
 
-import { ref, computed } from "vue";
+import { ref } from "vue";
 
 import GeometryView from "../components/BurgerGeometryView.vue"
 import Toggle from "../components/Toggle.vue"
@@ -9,6 +8,9 @@ import Slider from "../components/Slider.vue"
 
 import def from '../assets/burger_compute.gh' 
 
+let path = def //path to the Grasshopper definition
+
+// declare inputs
 let LevelsSliderName = ref("Levels") 
 let LevelsSliderValue = ref(1) 
 
@@ -31,46 +33,17 @@ let LettuceToggleName = ref("Lettuce")
 let LettuceToggleValue = ref(true) 
 
 
-let path = def //path to the Grasshopper definition
-let data = ref({})
 
 function updateValue(newValue, parameterName) {
-  console.log(parameterName,newValue)
-
-  if (parameterName === LevelsSliderName.value) {
-    LevelsSliderValue.value = newValue
-  } 
-  
-  if (parameterName === MustardToggleName.value) {
-    MustardToggleValue.value = newValue
+  // Iterate over the inputs array
+  for (const [key, value] of Object.entries(inputs.value)) {
+    if (key == parameterName){
+      inputs.value[key] = newValue
+    }
   }
-
-  if (parameterName === OnionToggleName.value) {
-    OnionToggleValue.value = newValue
-  }
-
-  if (parameterName === KetchupToggleName.value) {
-    KetchupToggleValue.value = newValue
-  }
-
-  if (parameterName === TomatoToggleName.value) {
-    TomatoToggleValue.value = newValue
-  }
-
-  if (parameterName === CheeseToggleName.value) {
-    CheeseToggleValue.value = newValue
-  }
-
-  if (parameterName === LettuceToggleName.value) {
-    LettuceToggleValue.value = newValue
-  }
-
 }
 
-
-// a computed ref. Vue will keep track of this and update it
-const computeData = computed(() => {
-  data = {
+let inputs = ref({
     [LevelsSliderName.value]: Number(LevelsSliderValue.value),
     [MustardToggleName.value]: MustardToggleValue.value,
     [OnionToggleName.value]: OnionToggleValue.value,
@@ -78,9 +51,6 @@ const computeData = computed(() => {
     [TomatoToggleName.value]: TomatoToggleValue.value,
     [CheeseToggleName.value]: CheeseToggleValue.value,
     [LettuceToggleName.value]: LettuceToggleValue.value,
-  };
-
-  return data
 })
 
 
@@ -93,9 +63,8 @@ with data, objects, functions etc. -->
 
 <div>
     <GeometryView
-      v-bind:data="computeData"
+      v-bind:data="inputs"
       v-bind:path="path"
-      v-on:updateMetadata="receiveMetedata"
       />
       
     <div class="sidebar" >

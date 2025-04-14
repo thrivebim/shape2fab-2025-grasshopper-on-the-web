@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-import { onMounted, onUpdated, watch } from 'vue'
+import { onMounted, watch } from 'vue'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { Rhino3dmLoader } from 'three/addons/loaders/3DMLoader.js'
@@ -26,26 +26,13 @@ import tomatoTexturePath from '../assets/textures/tomato.png'
 import cheeseTexturePath from '../assets/textures/cheese.png'
 
 
-
-watch(
-  () => props.data,
-  (newValue) => {
-    console.log(props.data);
-    if (newValue) {
-      compute();
-    }
-  },
-  { deep: true }
-);
-
 let renderer, camera, scene, controls, container
-let lettuceTexture, onionTexture, ketchupTexture, mustardTexture, tomatoTexture, cheeseTexture, breadTexture, meatTexture
-
-
+let lettuceTexture, onionTexture, tomatoTexture, cheeseTexture, breadTexture, meatTexture
 
 let solveCounter = 0
 
 function init() {
+
   container = document.getElementById('threejs-container')
   renderer = new THREE.WebGLRenderer({ antialias: true })
   renderer.setSize(window.innerWidth, window.innerHeight)
@@ -266,16 +253,26 @@ window.addEventListener('resize', () => {
   renderer.setSize(window.innerWidth, window.innerHeight)
 })
 
-onMounted(async () => {
-  init()
-  await loadRhino()
-  compute()
+  //VUE METHODS
+  //this vue method watches for changes in the incoming data
+  watch(
+    () => props.data,
+    (newValue) => {
+      console.log(props.data);
+      if (newValue) {
+        compute();  
+      }
+    },
+    { deep: true }
+  );
 
-})
-
-// onUpdated(() => {
-//   compute()
-// })
+  //this vue method loads three and compute whenthe component is initialized 
+  onMounted(async () => {
+    init()
+    await loadRhino()
+    compute()
+  
+  })
 
 
 </script>
