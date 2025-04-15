@@ -3,12 +3,12 @@ import RhinoCompute from "compute-rhino3d"
 import { store } from "@/stores/storeSingleton"
 
 // Local RhinoCompute endpoint  
-RhinoCompute.url = "http://localhost:6500/" //Rhino 7
+//RhinoCompute.url = "http://localhost:6500/" //Rhino 7
 //RhinoCompute.url = "http://localhost:6500/" //Rhino 8
 
 // TODO: modify to use remote server
-//RhinoCompute.url = "url"
-//RhinoCompute.apiKey = "api key"
+RhinoCompute.url = "https://compute.8x.rhino3d.com"
+RhinoCompute.apiKey = "S2F"
 
 let rhino, doc, res
 
