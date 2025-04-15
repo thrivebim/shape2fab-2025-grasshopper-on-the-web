@@ -18,13 +18,6 @@ const props = defineProps(['data', 'path', 'runCompute'])
 const emits = defineEmits(['updateMetadata'])
 
 
-import lettuceTexturePath from '../assets/textures/lettuce.png'
-import onionTexturePath from '../assets/textures/onion.png'
-import meatTexturePath from '../assets/textures/meat.png'
-import breadTexturePath from '../assets/textures/bread.png'
-import tomatoTexturePath from '../assets/textures/tomato.png'
-import cheeseTexturePath from '../assets/textures/cheese.png'
-
 
 let renderer, camera, scene, controls, container
 let lettuceTexture, onionTexture, tomatoTexture, cheeseTexture, breadTexture, meatTexture
@@ -39,98 +32,35 @@ function init() {
   renderer.setPixelRatio(window.devicePixelRatio)
   container.appendChild(renderer.domElement)
 
+  //create threejs scene
+  scene = new THREE.Scene()
+  scene.background = new THREE.Color('#f5f6fa')
+
+  //define camera
   camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
   camera.position.set(0, 40, 15)
   camera.up.set(0, 0, 1)
 
-  scene = new THREE.Scene()
-  scene.background = new THREE.Color('#f5f6fa')
 
+
+  //create a threejs renderer
   controls = new OrbitControls(camera, renderer.domElement)
 
+  //create a threejs light
   scene.add(new THREE.AmbientLight(0xffffff, 1.2))
   const directionalLight = new THREE.DirectionalLight(0xffffff, 3)
-  // directionalLight.position.set(0, 1, 0)
+  directionalLight.position.set(0, 1, 0)
   scene.add(directionalLight)
+
+
+  //create threejs geometry
+  // const geometry = new THREE.BoxGeometry(10, 10, 10)
+  // const material = new THREE.MeshStandardMaterial({ color: 0x00ff00 })
+  // const cube = new THREE.Mesh(geometry, material)
+  // cube.position.set(0, 0, 0)
+  // scene.add(cube)
+
   THREE.Object3D.DEFAULT_UP.set(0, 0, 1);
-
-  lettuceTexture = new THREE.TextureLoader().load(
-    lettuceTexturePath,
-    (texture) => {
-      texture.wrapS = THREE.RepeatWrapping
-      texture.wrapT = THREE.RepeatWrapping
-      texture.repeat.set(1, 1)
-    },
-    undefined,
-    (error) => {
-      console.error('Error loading texture:', error)
-    } 
-  );
-
-  onionTexture = new THREE.TextureLoader().load(
-    onionTexturePath,
-    (texture) => {
-      texture.wrapS = THREE.RepeatWrapping
-      texture.wrapT = THREE.RepeatWrapping
-      texture.repeat.set(1, 1)
-    },
-    undefined,
-    (error) => {
-      console.error('Error loading texture:', error)
-    } 
-  );
-
-
-  tomatoTexture = new THREE.TextureLoader().load(
-    tomatoTexturePath,
-    (texture) => {
-      texture.wrapS = THREE.RepeatWrapping
-      texture.wrapT = THREE.RepeatWrapping
-      texture.repeat.set(1, 1)
-    },
-    undefined,
-    (error) => {
-      console.error('Error loading texture:', error)
-    } 
-  );
-
-  cheeseTexture = new THREE.TextureLoader().load(
-    cheeseTexturePath,
-    (texture) => {
-      texture.wrapS = THREE.RepeatWrapping
-      texture.wrapT = THREE.RepeatWrapping
-      texture.repeat.set(1, 1)
-    },
-    undefined,
-    (error) => {
-      console.error('Error loading texture:', error)
-    } 
-  );
-  meatTexture = new THREE.TextureLoader().load(
-    meatTexturePath,
-    (texture) => {
-      texture.wrapS = THREE.RepeatWrapping
-      texture.wrapT = THREE.RepeatWrapping
-      texture.repeat.set(1, 1)
-    },
-    undefined,
-    (error) => {
-      console.error('Error loading texture:', error)
-    } 
-  );
-  breadTexture = new THREE.TextureLoader().load(
-    breadTexturePath,
-    (texture) => {
-      texture.wrapS = THREE.RepeatWrapping
-      texture.wrapT = THREE.RepeatWrapping
-      texture.repeat.set(1, 1)
-    },
-    undefined,
-    (error) => {
-      console.error('Error loading texture:', error)
-    } 
-  );
-
 
 
   animate()
@@ -157,54 +87,8 @@ async function compute() {
   loader.parse(buffer, function (object) {
     object.traverse((child) => {
       if (child.isMesh && child.userData?.attributes?.userStrings?.length) {
-        let part = child.userData.attributes.userStrings[0][1]
-        child.castShadow = true;
-        child.receiveShadow = true;
-  
-        if (part === "lettuce"){
-          const mat = new THREE.MeshStandardMaterial({ 
-            map: lettuceTexture, 
-            transparent: true,
-            side: THREE.DoubleSide })
-          child.material = mat
-        }
 
-        if (part === "onion"){
-          const mat = new THREE.MeshStandardMaterial({ 
-            map: onionTexture, 
-            transparent: true,
-            side: THREE.DoubleSide })
-          child.material = mat
-        }
-        if (part === "cheese"){
-          const mat = new THREE.MeshStandardMaterial({ 
-            map: cheeseTexture, 
-            transparent: true,
-            side: THREE.DoubleSide })
-          child.material = mat
-        }
-        if (part === "tomato"){
-          const mat = new THREE.MeshStandardMaterial({ 
-            map: tomatoTexture, 
-            transparent: true,
-            side: THREE.DoubleSide })
-          child.material = mat
-        }
-        if (part === "meat"){
-          const mat = new THREE.MeshStandardMaterial({ 
-            map: meatTexture, 
-            transparent: true,
-            side: THREE.DoubleSide })
-          child.material = mat
-        }
-        if (part === "bread"){
-          const mat = new THREE.MeshStandardMaterial({ 
-            map: breadTexture, 
-            transparent: true,
-            side: THREE.DoubleSide })
-          child.material = mat
-        }
-
+        // DO something here
 
       }
     })
@@ -260,7 +144,7 @@ window.addEventListener('resize', () => {
     (newValue) => {
       console.log(props.data);
       if (newValue) {
-        compute();  
+        // compute();  
       }
     },
     { deep: true }
@@ -269,8 +153,8 @@ window.addEventListener('resize', () => {
   //this vue method loads three and compute whenthe component is initialized 
   onMounted(async () => {
     init()
-    await loadRhino()
-    compute()
+    // await loadRhino()
+    // compute()
   
   })
 
